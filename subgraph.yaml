@@ -1,0 +1,59 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TRDCvault
+    network: bsc
+    source:
+      address: "0x3e940bD9Aa2A7da8b3287e07fA27437B99fd6C14"
+      abi: TRDCvault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - BuyWeapon
+        - GetCop
+        - GetThief
+        - GetWeapon
+        - GiveTreasure
+        - OwnershipTransferred
+        - RewardsClaimed
+        - Transfer
+        - WithdrawalBNB
+        - WithdrawalToken
+        - copHeist
+        - thiefHeist
+      abis:
+        - name: TRDCvault
+          file: ./abis/TRDCvault.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: BuyWeapon(string,uint256)
+          handler: handleBuyWeapon
+        - event: GetCop(string,uint256)
+          handler: handleGetCop
+        - event: GetThief(string,uint256)
+          handler: handleGetThief
+        - event: GetWeapon(string,uint256)
+          handler: handleGetWeapon
+        - event: GiveTreasure(address,uint256)
+          handler: handleGiveTreasure
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RewardsClaimed(uint256)
+          handler: handleRewardsClaimed
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: WithdrawalBNB(uint256,address)
+          handler: handleWithdrawalBNB
+        - event: WithdrawalToken(address,uint256,address)
+          handler: handleWithdrawalToken
+        - event: copHeist(uint256,uint256,uint256)
+          handler: handlecopHeist
+        - event: thiefHeist(string,uint256,string,uint256,string,uint256)
+          handler: handlethiefHeist
+      file: ./src/mapping.ts

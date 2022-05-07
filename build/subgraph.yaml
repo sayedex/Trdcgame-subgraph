@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: Trdcgame
@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0x3e940bD9Aa2A7da8b3287e07fA27437B99fd6C14"
       abi: TRDCvault
-      startBlock: 17372311 
+      startBlock: 17372311
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -19,14 +19,12 @@ dataSources:
         - thiefHeists
       abis:
         - name: TRDCvault
-          file: ./abis/TRDCvault.json
+          file: Trdcgame/abis/TRDCvault.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: Handletransfer
-        - event: RewardsClaimed(uint256)  
+        - event: RewardsClaimed(uint256)
           handler: HandleRewardsClaimed
         - event: thiefHeist(string,uint256,string,uint256,string,uint256)
           handler: HandlethiefHeist
-      
-      file: ./src/mapping.ts   
- 
+      file: Trdcgame/Trdcgame.wasm

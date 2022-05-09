@@ -79,6 +79,7 @@ export class rewardsclaimed extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("Amount", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -107,6 +108,15 @@ export class rewardsclaimed extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get from(): Bytes {
+    let value = this.get("from");
+    return value!.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
+  }
+
   get Amount(): BigInt {
     let value = this.get("Amount");
     return value!.toBigInt();
@@ -117,11 +127,12 @@ export class rewardsclaimed extends Entity {
   }
 }
 
-export class thiefheists extends Entity {
+export class thiefheist extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("Bank", Value.fromString(""));
     this.set("BankPower", Value.fromBigInt(BigInt.zero()));
     this.set("Thief", Value.fromString(""));
@@ -132,18 +143,18 @@ export class thiefheists extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save thiefheists entity without an ID");
+    assert(id != null, "Cannot save thiefheist entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type thiefheists must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type thiefheist must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("thiefheists", id.toString(), this);
+      store.set("thiefheist", id.toString(), this);
     }
   }
 
-  static load(id: string): thiefheists | null {
-    return changetype<thiefheists | null>(store.get("thiefheists", id));
+  static load(id: string): thiefheist | null {
+    return changetype<thiefheist | null>(store.get("thiefheist", id));
   }
 
   get id(): string {
@@ -153,6 +164,15 @@ export class thiefheists extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get from(): Bytes {
+    let value = this.get("from");
+    return value!.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
   }
 
   get Bank(): string {

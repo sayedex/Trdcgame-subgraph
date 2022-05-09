@@ -15,35 +15,39 @@ import {
   copHeist,
   thiefHeist
 } from "../generated/TRDCvault/TRDCvault"
-import { transfer ,rewardsclaimed,thiefheists} from "../generated/schema"
+import { transfer ,rewardsclaimed,thiefheist} from "../generated/schema"
 
 export function Handletransfer(event: Transfer): void {
   let transactionHash = event.transaction.hash.toHexString()
   let token = transfer.load(transactionHash);
   if (token==null) {
        token = new transfer(transactionHash);
-       token.id = event.transaction.hash.toHexString();
-       token.from = event.params.from;
-       token.to = event.params.to;
-       token.value = event.params.value;
-
     }
+    token.id = event.transaction.hash.toHexString();
+    token.from = event.params.from;
+    token.to = event.params.to;
+    token.value = event.params.value;
 token.save()
 }
 export function HandleRewardsClaimed(event: RewardsClaimed): void {
-  let transactionHasha = event.transaction.from.toHexString()
-  let tokenA = rewardsclaimed.load(transactionHasha);
-       tokenA = new rewardsclaimed(transactionHasha);
-       tokenA.id = event.transaction.hash.toHexString();
-       tokenA.Amount = event.params.Amount;
+  let transactionHasha = event.transaction.hash.toHexString();
+   let tokenA = rewardsclaimed.load(transactionHasha);
+  if(tokenA===null){
+    tokenA = new rewardsclaimed(transactionHasha);
+  }
+   tokenA.from = event.transaction.from;
+   tokenA.Amount = event.params.Amount;
+   tokenA.save()
 
-tokenA.save()
+
 }
 export function HandlethiefHeist(event: thiefHeist): void {
-    let transactionHashv = event.params.Thief;
-    let tokenC = thiefheists.load(transactionHashv);
-    tokenC = new thiefheists(transactionHashv);
-    tokenC.id = event.transaction.hash.toHexString();
+    let transactionHashv =  event.transaction.hash.toHexString();
+    let tokenC = thiefheist.load(transactionHashv);
+    if(tokenC==null){
+      tokenC = new thiefheist(transactionHashv);
+    }
+    tokenC.from = event.transaction.from;
     tokenC.Bank = event.params.Bank;
     tokenC.BankPower = event.params.BankPower;
     tokenC.Thief = event.params.Thief;

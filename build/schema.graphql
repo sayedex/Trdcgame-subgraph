@@ -1,5 +1,7 @@
+
+
 type transfer @entity(immutable: true){
-  id:ID!
+id:ID!
 from:Bytes!
 to:Bytes!
 value:BigInt!
@@ -7,10 +9,12 @@ value:BigInt!
 
 type rewardsclaimed @entity(immutable: true){
   id:ID!
+  from:Bytes!
   Amount:BigInt!
 }
-type thiefheists @entity(immutable: true){
+type thiefheist @entity(immutable: true){
   id:ID!
+  from:Bytes!
   Bank:String!
   BankPower:BigInt!
   Thief:String!
